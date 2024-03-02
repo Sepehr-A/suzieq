@@ -25,6 +25,7 @@ class DeviceObj(SqPandasEngine):
         status = kwargs.pop('status', '')
         os_version = kwargs.pop('version', '')
         os = kwargs.get('os', '')
+        osString = kwargs.get('osString', '')
         ignore_neverpoll = kwargs.pop('ignore_neverpoll', False)
 
         addnl_fields = []
@@ -45,7 +46,7 @@ class DeviceObj(SqPandasEngine):
         user_query_cols = self._get_user_query_cols(user_query)
         addnl_fields += [x for x in user_query_cols if x not in addnl_fields]
 
-        getcols = list(set(fields + ['timestamp']))
+        getcols = list(set(fields + ['timestamp', "architecture", "os"]))
 
         df = super().get(active_only=False, addnl_fields=addnl_fields,
                          columns=getcols, **kwargs)
@@ -117,6 +118,20 @@ class DeviceObj(SqPandasEngine):
                                                             None)))
             uptime_cols = pd.to_timedelta(uptime_cols, unit='s')
             df['uptime'] = uptime_cols
+
+        if "os" in getcols:
+            linux_based_oses = ['linux', 'cumulus', 'sonic']
+            fields.append('linux_base')
+            # Add the 'linux_base' column based on the 'os' column
+            df['linux_base'] = df['os'].apply(lambda x: x in linux_based_oses)
+
+            if "architecture" in getcols and "version" in getcols:
+                fields.append('osString')
+                # Add the 'osString' column based on the 'os', 'version' and 'architecture' columns
+                df['osString'] = df['os'] + ' ' + df['version'] + ' (' + df['architecture'] + ')'
+
+        if osString:
+            df = df[df['osString'].str.contains(osString, case=False, na=False, regex=False)]
 
         if df.empty:
             return df.reset_index(drop=True)[fields]

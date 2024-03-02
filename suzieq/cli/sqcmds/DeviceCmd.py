@@ -7,11 +7,12 @@ from suzieq.sqobjects.device import DeviceObj
 
 
 @command("device", help="Act on device data")
-@argument("status", description="filter by polling status",)
+@argument("status", description="filter by polling status")
 @argument("os", description="NOS(s), space separated")
 @argument("version", description="NOS version(s), space separated")
 @argument("vendor", description="Vendor(s), space separated")
 @argument("model", description="Model(s), space separated")
+@argument("osString", description="Filter devices by OS string (format: os version (architecture))")
 class DeviceCmd(SqTableCommand):
     """Basic device information such as OS, version, model etc."""
 
@@ -27,6 +28,7 @@ class DeviceCmd(SqTableCommand):
             query_str: str = " ",
             columns: str = "default",
             os: str = '',
+            osString: str = '',
             version: str = '',
             status: str = '',
             vendor: str = '',
@@ -60,5 +62,6 @@ class DeviceCmd(SqTableCommand):
             'version': version.split(),
             'status': status.split(),
             'model': model,
+            'osString': osString,
             'vendor': vendor.split()
         }

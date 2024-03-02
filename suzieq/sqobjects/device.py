@@ -11,7 +11,7 @@ class DeviceObj(SqObject):
     def __init__(self, **kwargs):
         super().__init__(table='device', **kwargs)
         self._valid_get_args = ['namespace', 'hostname', 'columns', 'os',
-                                'vendor', 'model', 'status', 'version',
+                                'vendor', 'model', 'status', 'version', 'osString',
                                 'query_str', 'ignore_neverpoll']
         self._valid_arg_vals = {
             'status': ['alive', 'dead', 'neverpoll',
