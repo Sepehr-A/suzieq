@@ -218,6 +218,12 @@ class DeviceStatus(str, Enum):
     notneverpoll = "!neverpoll"
 
 
+class PingStatus(str, Enum):
+    Success = "Success"
+    Timeout = "Timeout"
+    Unreachable = "Unreachable"
+
+
 class BgpStateValues(str, Enum):
     ESTABLISHED = "Established"
     NOTESTD = "NotEstd"
@@ -529,6 +535,36 @@ def query_mlag(verb: CommonVerbs, request: Request,
                count: str = None, reverse: str = None,
                ):
     function_name = inspect.currentframe().f_code.co_name
+    return read_shared(function_name, verb, request, locals())
+
+
+@app.get("/api/v2/ping/{verb}")
+def query_ping(verb: CommonVerbs, request: Request,
+               token: str = Depends(get_api_key),
+               format: str = None,
+               hostname: List[str] = Query(None),
+               start_time: str = "", end_time: str = "",
+               view: ViewValues = "latest",
+               namespace: List[str] = Query(None),
+               columns: List[str] = Query(default=["default"]),
+               device_name: List[str] = Query(None),
+               target: List[str] = Query(None),
+               timestamp: List[str] = Query(None),
+               response_time: List[str] = Query(None),
+               status: List[PingStatus] = Query(None),
+               ttl: str = None,
+               sent_packets: bool = None,
+               received_packets: str = None,
+               error_message: str = None,
+               auth_name: str = None,
+               transport_type: str = None,
+               device_type: str = None,
+               query_str: str = None, what: str = None,
+               count: str = None, reverse: str = None,
+               ):
+    function_name = inspect.currentframe().f_code.co_name
+    if status:
+        status = [x.value for x in status]  # convert enum to string
     return read_shared(function_name, verb, request, locals())
 
 
