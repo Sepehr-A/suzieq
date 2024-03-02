@@ -1,0 +1,87 @@
+{
+    "namespace": "suzieq",
+    "name": "ping",
+    "type": "record",
+    "fields": [
+        {
+            "name": "namespace",
+            "type": "string",
+            "key": 0,
+            "display": 0,
+            "partition": 1
+        },
+        {
+            "name": "hostname",
+            "type": "string",
+            "key": 1,
+            "display": 1,
+            "partition": 2,
+            "description": "Hostname associated with this record"
+        },
+        {
+            "name": "device_name",
+            "type": "string",
+            "description": "The name or identifier of the device from which the ping was initiated."
+        },
+        {
+            "name": "target",
+            "type": "string",
+            "description": "The IP address or DNS name that was pinged."
+        },
+        {
+            "name": "timestamp",
+            "type": "string",
+            "description": "The date and time when the ping was executed."
+        },
+        {
+            "name": "response_time",
+            "type": "string",
+            "description": "The time it took for the ping to return a response, typically measured in milliseconds."
+        },
+        {
+            "name": "status",
+            "type": "string",
+            "description": "The result of the ping ('Success', 'Timeout', 'Unreachable')."
+        },
+        {
+            "name": "ttl",
+            "type": "string",
+            "description": "Time to Live value from the ping response, indicating the number of hops the packet can travel."
+        },
+        {
+            "name": "sent_packets",
+            "type": "string",
+            "description": "The number of packets sent in the ping command."
+        },
+        {
+            "name": "received_packets",
+            "type": "string",
+            "description": "The number of packets received in response to the ping command."
+        },
+        {
+            "name": "error_message",
+            "type": "string",
+            "description": "Any error messages returned if the ping failed."
+        },
+        {
+            "name": "auth_name",
+            "type": "string",
+            "description": "Identifying the authentication method used."
+        },
+        {
+            "name": "transport_type",
+            "type": "string",
+            "description": "The transport mechanism used for the ping (e.g., 'SSH', 'HTTPS'), can be derived from the URL."
+        },
+        {
+            "name": "device_type",
+            "type": "string",
+            "description": "The type of device from which the ping was initiated (e.g., router, switch)."
+        },
+        {
+            "name": "namespace",
+            "type": "string",
+            "description": "Namespace associated with this record."
+        }
+    ]
+}
